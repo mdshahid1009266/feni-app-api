@@ -55,6 +55,22 @@ const login = async (req, res) => {
     }
 };
 
+const getAllUsers = async (req, res) => {
+    try {
+        // Query the database to find all users
+        const users = await User.find();  // This will return all users
 
+        // Check if no users are found
+        if (users.length === 0) {
+            return res.status(404).send('No users found');
+        }
 
-export { signup, login };
+        // Send the users as a response
+        res.status(200).json(users);
+    } catch (err) {
+        console.error('Error fetching users:', err);
+        res.status(500).send('Server error');
+    }
+};
+
+export { signup, login, getAllUsers };
